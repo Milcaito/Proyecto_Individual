@@ -6,14 +6,130 @@ También tiene relevancia la oportunidad de sustituir fuentes de generación med
 # Figura
 ![Model diagram](Esquema_modelo.png)
 # Modelo Matematico 
+Se implemento un modelo 0D, descrito en el codigo. A continuacion se describe el modelo principal aportado, el modelo para la carga y descarga de almacenamiento termico de un lecho solido mediante aire como fluido de transferencia de calor. 
+
+###  Charge process 
+Air:
+$$
+\frac{dT_g}{dt} = -\frac{\dot{m_g}}{\rho_g A\epsilon}\frac{dT_g}{dz} -\frac{ha}{\rho_g C_{p_{g}}\epsilon}(T_g-T_p)
+$$
+Packed Bed:
+$$
+\frac{dT_p}{dt} = \frac{ha}{\rho_p C_{p_{p}}(1-\epsilon)}(T_g-T_p)
+$$
+
+#### Initial Conditions t=0
+
+$$
+T_g = T_{p_{in}}
+$$
+
+$$
+T_p = T_{p_{in}}
+$$
+
+#### Boundary conditions
+
+$$
+T_{g}(0,t) = T_{g_{in}}
+$$
+
+### Discharge process
+
+Air:
+$$
+\frac{dT_g}{dt} = \frac{\dot{m_g}}{\rho_g A\epsilon}\frac{dT_g}{dz} +\frac{ha}{\rho_g C_{p_{g}}\epsilon}(T_p-T_g)
+$$
+Packed Bed:
+$$
+\frac{dT_p}{dt} = -\frac{ha}{\rho_p C_{p_{p}}(1-\epsilon)}(T_p-T_g)
+$$
+
+
+
+#### Initial Conditions t=0
+$$
+T_{g}(z,0) = T_{g_{des}}
+$$
+
+$$
+T_{p}(z,0) = T_{p_{carga}}
+$$
+
+
+#### Boundary conditions
+$$
+T_{g}(L,t) = T_{g_{des}}
+$$
 
 # Metodo Numerico
+Como metodo numerico se utilizo el metodo de lineas, debido a la caracteristicas de integracion sobre el tiempo.
+
+### discretization Charging Process
+
+El aire avanza desde z=0 a z=L, por lo que la informacion se transporta hacia indices mayores. Considerando esto, se utiliza el esquema backward para mayor estabilidad numerica:
+$$
+\frac{dT_g}{dz} = \frac{T_{g_{i}}-T_{g_{i-1}}}{\Delta z}
+$$
+Air:
+$$
+\frac{dT_{g_i}}{dt} = -\frac{\dot{m_g}}{\rho_g A\epsilon}\frac{T_{g_{i}}-T_{g_{i-1}}}{\Delta z} -\frac{ha}{\rho_g C_{p_{g}}\epsilon}(T_{g_i}-T_p)
+$$
+
+$$
+\frac{dT_{g_i}}{dt} = \frac{\dot{m_g}}{\rho_g A\epsilon \Delta z}T_{g_{i-1}}-\left(\frac{ha}{\rho_g C_{p_{g}}\epsilon}+\frac{\dot{m_g}}{\rho_g A\epsilon \Delta z}\right) T_{g_i} +  \frac{ha}{\rho_g C_{p_{g}}\epsilon} T_p
+$$
+
+Packed Bed:
+$$
+\frac{dT_{p_i}}{dt} = \frac{ha}{\rho_p C_{p_{p}}(1-\epsilon)}(T_{g_i}-T_{p_i})
+$$
+
+$$
+\frac{dT_{p_i}}{dt} = - \frac{ha}{\rho_p C_{p_{p}}(1-\epsilon)} T_{p_i} + \frac{ha}{\rho_p C_{p_{p}}(1-\epsilon)} T_{g_i} 
+$$
+
+### Discretization
+
+El aire avanza desde z=L a z=0, por lo que la informacion se transporta hacia indices menores. Considerando esto, se utiliza el esquema forward para mayor estabilidad numerica:
+$$
+\frac{dT_g}{dz} = \frac{T_{g_{i+1}}-T_{g_{i}}}{\Delta z}
+$$
+Air:
+
+$$
+\frac{dT_{g_i}}{dt} = \frac{\dot{m_g}}{\rho_g A\epsilon}\frac{T_{g_{i+1}}-T_{g_{i}}}{\Delta z} +\frac{ha}{\rho_g C_{p_{g}}\epsilon}(T_p-T_{g_i})
+$$
+
+$$
+\frac{dT_{g_i}}{dt} = \frac{\dot{m_g}}{\rho_g A\epsilon \Delta z}T_{g_{i-1}}-\left(\frac{ha}{\rho_g C_{p_{g}}\epsilon}+\frac{\dot{m_g}}{\rho_g A\epsilon \Delta z}\right) T_{g_i} +  \frac{ha}{\rho_g C_{p_{g}}\epsilon} T_p
+$$
+
+Packed Bed:
+$$
+\frac{dT_{p_i}}{dt} = -\frac{ha}{\rho_p C_{p_{p}}(1-\epsilon)}(T_{p_i}-T_{g_i})
+$$
+
+$$
+\frac{dT_{p_i}}{dt} = - \frac{ha}{\rho_p C_{p_{p}}(1-\epsilon)} T_{p_i} + \frac{ha}{\rho_p C_{p_{p}}(1-\epsilon)} T_{g_i} 
+$$
 
 # Resultados y Aporte
 
+Los principales resultados obtenidos a partir del modelo numérico permiten caracterizar el comportamiento térmico del sistema de almacenamiento en lecho empacado durante los procesos de carga y descarga. Entre los aportes más relevantes se encuentran:
+    Temperatura del aire a la salida del lecho
+        El modelo entrega la temperatura del aire para carga y descarga, lo que permite determinar la capacidad útil del TES, el tiempo durante el cual el sistema puede entregar aire por sobre una temperatura mínima requerida, y evaluar si el almacenamiento es capaz de cumplir con las condiciones térmicas del proceso posterior (por ejemplo, calentamiento de agua o generación de vapor).
+
+    Perfiles de temperatura a lo largo del lecho
+        Los perfiles de temperatura para el aire y el lecho permiten identificar la evolución del frente térmico, evaluar la estratificación del lecho y determinar qué fracción del material participa activamente del almacenamiento. Esto permite estimar cuánta energía queda realmente disponible y evaluar si el volumen del lecho está subdimensionado o sobredimensionado.
+
+    Determinación del tiempo de carga y descarga efectiva
+        
 
 
 # Referencias
 Djunisic, S. (2025). Chile’s renewable energy curtailments up 17% y/y in H1 2025. https://renewablesnow.com/news/chiles-renewable-energy-curtailments-up-17-percent-yy-in-h1-2025-1280137/
+
+
 Sun, M., Liu, T., Wang, X., Liu, T., Li, M., Chen, G., & Jiang, D. (2023). Roles of thermal energy storage technology for carbon neutrality. Carbon Neutrality, 2(1), 12. https://doi.org/10.1007/s43979-023-00052-w 
 
