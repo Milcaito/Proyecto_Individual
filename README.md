@@ -3,12 +3,15 @@ En el escenario actual de alta penetración de energías renovables con carga va
 
 También tiene relevancia la oportunidad de sustituir fuentes de generación mediante combustibles fósiles en procesos de alta demanda de energía térmica a partir del uso de sistemas TES, reduciendo las emisiones cuando estos son cargados mediante energías renovables. O a su vez mediante el aprovechamiento de calor residual, se señala que cerca del 60% de la generación de calor industrial es perdido como calor residual, y que su utilización podría reducir el uso de combustibles fósiles así como aportar a la carbono neutralidad (Sun et al., 2023).
 
+
+
 # Figura
+el modelamiento consiste en el calentamiento del lecho solido mediante aire en la carga y calentamiento del aire mediante el lecho en la descarga.
 
 ![Model diagram](Esquema_modelo.png)
 
 # Modelo Matematico 
-Se implemento un modelo 0D, descrito en el codigo. A continuacion se describe el modelo principal aportado, el modelo para la carga y descarga de almacenamiento termico de un lecho solido mediante aire como fluido de transferencia de calor. 
+Se implemento un modelo 0D, descrito en el codigo. A continuacion se describe el modelo principal aportado, el modelo para la carga y descarga de almacenamiento termico de un lecho solido mediante aire como fluido de transferencia de calor. Este fue desarrollado a partir del trabajo presentado por (Moradi et al., 2022). Tambien se utilizo para la obtencion de correlacion empiricas (coeficiente de transferencia de calor) y parametros del relleno (densidad, capacidad calorifica, etc.), el trabajo realizado por (Jurczyk et al., 2024).
 
 ###  Charge process 
 Air:
@@ -148,6 +151,9 @@ A partir de la evolución temporal de la temperatura de salida y del perfil a lo
 # Referencias
 Djunisic, S. (2025). Chile’s renewable energy curtailments up 17% y/y in H1 2025. https://renewablesnow.com/news/chiles-renewable-energy-curtailments-up-17-percent-yy-in-h1-2025-1280137/
 
+Moradi, M., Farrokhi, M., Rahimi, A., & Hatamipour, M. S. (2022). Modeling strategies for sensible heat thermal energy recovery through packed beds. Journal of Energy Storage, 54, 105297. https://doi.org/10.1016/j.est.2022.105297
+
+Jurczyk, M., Spietz, T., Czardybon, A., Dobras, S., Ignasiak, K., Bartela, Ł., Uchman, W., & Ochmann, J. (2024). Review of Thermal Energy Storage Materials for Application in Large-Scale Integrated Energy Systems—Methodology for Matching Heat Storage Solutions for Given Applications. Energies, 17(14).
 
 Sun, M., Liu, T., Wang, X., Liu, T., Li, M., Chen, G., & Jiang, D. (2023). Roles of thermal energy storage technology for carbon neutrality. Carbon Neutrality, 2(1), 12. https://doi.org/10.1007/s43979-023-00052-w 
 
