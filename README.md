@@ -4,7 +4,7 @@ En el escenario actual de alta penetración de energías renovables con carga va
 También tiene relevancia la oportunidad de sustituir fuentes de generación mediante combustibles fósiles en procesos de alta demanda de energía térmica a partir del uso de sistemas TES, reduciendo las emisiones cuando estos son cargados mediante energías renovables. O a su vez mediante el aprovechamiento de calor residual, se señala que cerca del 60% de la generación de calor industrial es perdido como calor residual, y que su utilización podría reducir el uso de combustibles fósiles así como aportar a la carbono neutralidad (Sun et al., 2023).
 
 # Figura
-![Model diagram](img/Esquema_modelo.png)
+![Model diagram](Esquema_modelo.png)
 # Modelo Matematico 
 
 # Metodo Numerico
