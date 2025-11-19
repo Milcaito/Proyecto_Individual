@@ -4,16 +4,21 @@ En el escenario actual de alta penetración de energías renovables con carga va
 También tiene relevancia la oportunidad de sustituir fuentes de generación mediante combustibles fósiles en procesos de alta demanda de energía térmica a partir del uso de sistemas TES, reduciendo las emisiones cuando estos son cargados mediante energías renovables. O a su vez mediante el aprovechamiento de calor residual, se señala que cerca del 60% de la generación de calor industrial es perdido como calor residual, y que su utilización podría reducir el uso de combustibles fósiles así como aportar a la carbono neutralidad (Sun et al., 2023).
 
 # Figura
+
 ![Model diagram](Esquema_modelo.png)
+
 # Modelo Matematico 
 Se implemento un modelo 0D, descrito en el codigo. A continuacion se describe el modelo principal aportado, el modelo para la carga y descarga de almacenamiento termico de un lecho solido mediante aire como fluido de transferencia de calor. 
 
 ###  Charge process 
 Air:
+
 $$
 \frac{dT_g}{dt} = -\frac{\dot{m_g}}{\rho_g A\epsilon}\frac{dT_g}{dz} -\frac{ha}{\rho_g C_{p_{g}}\epsilon}(T_g-T_p)
 $$
+
 Packed Bed:
+
 $$
 \frac{dT_p}{dt} = \frac{ha}{\rho_p C_{p_{p}}(1-\epsilon)}(T_g-T_p)
 $$
@@ -37,10 +42,13 @@ $$
 ### Discharge process
 
 Air:
+
 $$
 \frac{dT_g}{dt} = \frac{\dot{m_g}}{\rho_g A\epsilon}\frac{dT_g}{dz} +\frac{ha}{\rho_g C_{p_{g}}\epsilon}(T_p-T_g)
 $$
+
 Packed Bed:
+
 $$
 \frac{dT_p}{dt} = -\frac{ha}{\rho_p C_{p_{p}}(1-\epsilon)}(T_p-T_g)
 $$
@@ -63,15 +71,20 @@ T_{g}(L,t) = T_{g_{des}}
 $$
 
 # Metodo Numerico
-Como metodo numerico se utilizo el metodo de lineas, debido a la caracteristicas de integracion sobre el tiempo.
+La elección del método de líneas (MOL) como estrategia numérica para resolver el modelo de transferencia de calor en el lecho empacado se fundamenta en la estructura matemática del problema. El sistema está gobernado por ecuaciones diferenciales parciales (EDP) de tipo convección–transferencia de calor y el acoplamiento principal ocurre en el dominio temporal debido al intercambio energético entre el fluido y el sólido.
+
+El MOL permite transformar las derivadas espaciales en un conjunto de ecuaciones diferenciales ordinarias (EDO) mediante una discretización en el eje z. De esta forma, la dinámica en el tiempo puede resolverse con integradores robustos para EDO.
 
 ### discretization Charging Process
 
 El aire avanza desde z=0 a z=L, por lo que la informacion se transporta hacia indices mayores. Considerando esto, se utiliza el esquema backward para mayor estabilidad numerica:
+
 $$
 \frac{dT_g}{dz} = \frac{T_{g_{i}}-T_{g_{i-1}}}{\Delta z}
 $$
+
 Air:
+
 $$
 \frac{dT_{g_i}}{dt} = -\frac{\dot{m_g}}{\rho_g A\epsilon}\frac{T_{g_{i}}-T_{g_{i-1}}}{\Delta z} -\frac{ha}{\rho_g C_{p_{g}}\epsilon}(T_{g_i}-T_p)
 $$
@@ -81,6 +94,7 @@ $$
 $$
 
 Packed Bed:
+
 $$
 \frac{dT_{p_i}}{dt} = \frac{ha}{\rho_p C_{p_{p}}(1-\epsilon)}(T_{g_i}-T_{p_i})
 $$
@@ -92,9 +106,11 @@ $$
 ### Discretization
 
 El aire avanza desde z=L a z=0, por lo que la informacion se transporta hacia indices menores. Considerando esto, se utiliza el esquema forward para mayor estabilidad numerica:
+
 $$
 \frac{dT_g}{dz} = \frac{T_{g_{i+1}}-T_{g_{i}}}{\Delta z}
 $$
+
 Air:
 
 $$
@@ -106,6 +122,7 @@ $$
 $$
 
 Packed Bed:
+
 $$
 \frac{dT_{p_i}}{dt} = -\frac{ha}{\rho_p C_{p_{p}}(1-\epsilon)}(T_{p_i}-T_{g_i})
 $$
@@ -117,6 +134,7 @@ $$
 # Resultados y Aporte
 
 Los principales resultados obtenidos a partir del modelo numérico permiten caracterizar el comportamiento térmico del sistema de almacenamiento en lecho empacado durante los procesos de carga y descarga. Entre los aportes más relevantes se encuentran:
+
     Temperatura del aire a la salida del lecho
         El modelo entrega la temperatura del aire para carga y descarga, lo que permite determinar la capacidad útil del TES, el tiempo durante el cual el sistema puede entregar aire por sobre una temperatura mínima requerida, y evaluar si el almacenamiento es capaz de cumplir con las condiciones térmicas del proceso posterior (por ejemplo, calentamiento de agua o generación de vapor).
 
@@ -124,7 +142,7 @@ Los principales resultados obtenidos a partir del modelo numérico permiten cara
         Los perfiles de temperatura para el aire y el lecho permiten identificar la evolución del frente térmico, evaluar la estratificación del lecho y determinar qué fracción del material participa activamente del almacenamiento. Esto permite estimar cuánta energía queda realmente disponible y evaluar si el volumen del lecho está subdimensionado o sobredimensionado.
 
     Determinación del tiempo de carga y descarga efectiva
-        
+
 
 
 # Referencias
