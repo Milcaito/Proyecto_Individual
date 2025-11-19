@@ -135,14 +135,14 @@ $$
 
 Los principales resultados obtenidos a partir del modelo numérico permiten caracterizar el comportamiento térmico del sistema de almacenamiento en lecho empacado durante los procesos de carga y descarga. Entre los aportes más relevantes se encuentran:
 
-    Temperatura del aire a la salida del lecho
-        El modelo entrega la temperatura del aire para carga y descarga, lo que permite determinar la capacidad útil del TES, el tiempo durante el cual el sistema puede entregar aire por sobre una temperatura mínima requerida, y evaluar si el almacenamiento es capaz de cumplir con las condiciones térmicas del proceso posterior (por ejemplo, calentamiento de agua o generación de vapor).
+#### Temperatura del aire a la salida del lecho
+El modelo entrega la temperatura del aire para carga y descarga, lo que permite determinar la capacidad útil del TES, el tiempo durante el cual el sistema puede entregar aire por sobre una temperatura mínima requerida, y evaluar si el almacenamiento es capaz de cumplir con las condiciones térmicas del proceso posterior (por ejemplo, calentamiento de agua o generación de vapor).
 
-    Perfiles de temperatura a lo largo del lecho
-        Los perfiles de temperatura para el aire y el lecho permiten identificar la evolución del frente térmico, evaluar la estratificación del lecho y determinar qué fracción del material participa activamente del almacenamiento. Esto permite estimar cuánta energía queda realmente disponible y evaluar si el volumen del lecho está subdimensionado o sobredimensionado.
+#### Perfiles de temperatura a lo largo del lecho
+Los perfiles de temperatura para el aire y el lecho permiten identificar la evolución del frente térmico, evaluar la estratificación del lecho y determinar qué fracción del material participa activamente del almacenamiento. Esto permite estimar cuánta energía queda realmente disponible y evaluar si el volumen del lecho está subdimensionado o sobredimensionado.
 
-    Determinación del tiempo de carga y descarga efectiva
-
+#### Determinación del tiempo de carga y descarga efectiva
+A partir de la evolución temporal de la temperatura de salida y del perfil a lo largo del lecho, se puede establecer el tiempo durante el cual la energía entregada es térmicamente útil. Facilitando la toma de decisiones operativas. 
 
 
 # Referencias
